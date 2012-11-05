@@ -8,6 +8,7 @@ do
     then
         if [ -n "$OUTFILE" -a -n "$FILESTOMERGE" ]
         then
+            echo $OUTFILE
             sort -m $FILESTOMERGE > $OUTFILE
             rm $FILESTOMERGE
         fi
@@ -27,5 +28,6 @@ done
 
 if [ -n "$OUTFILE" ]
 then
+    echo $OUTFILE
     sort -m $FILESTOMERGE > $OUTFILE
 fi
