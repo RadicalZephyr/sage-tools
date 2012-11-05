@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-while read -r date time rest
+while read -r 
 do
-    echo ${date}$'\t'${time}$'\t'$date $time $rest
+    DATE=$(echo $(basename $REPLY) | cut -d '.' -f 2)
+    NAME=$(echo $(basename $REPLY) | cut -d '.' -f 1 | cut --complement -c1-8)
+    echo $NAME-$DATE$'\t'$REPLY
 done
