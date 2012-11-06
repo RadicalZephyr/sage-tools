@@ -1,17 +1,24 @@
 #!/usr/bin/env bash
 
+processKey () {
+    OUTFILE="$1"
+    FILESTOMERGE="$2"
+
+    if [ -n "$OUTFILE" -a -n "$FILESTOMERGE" ]
+    then
+        echo $OUTFILE
+        sort -m $FILESTOMERGE > $OUTFILE
+        rm $FILESTOMERGE
+    fi
+}
+
 OUTFILE=''
 FILESTOMERGE=''
 while read -r KEY FILE
 do
     if [ "$KEY" != "$OUTFILE" ]
     then
-        if [ -n "$OUTFILE" -a -n "$FILESTOMERGE" ]
-        then
-            echo $OUTFILE
-            sort -m $FILESTOMERGE > $OUTFILE
-            rm $FILESTOMERGE
-        fi
+        processKey "$OUTFILE" "$FILESTOMERGE"
         OUTFILE=$KEY
         FILESTOMERGE=''
     fi
@@ -26,8 +33,5 @@ do
     fi        
 done
 
-if [ -n "$OUTFILE" ]
-then
-    echo $OUTFILE
-    sort -m $FILESTOMERGE > $OUTFILE
-fi
+# Make sure we process the last key.
+processKey "$OUTFILE" "$FILESTOMERGE"
