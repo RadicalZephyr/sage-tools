@@ -13,7 +13,7 @@ processKey () {
 
     if [ -n "$OUTFILE" -a -n "$FILESTOMERGE" ]
     then
-        sort -m $FILESTOMERGE > out/$OUTFILE
+        sort -m $FILESTOMERGE > out/${OUTFILE}.log
         #hadoop fs -cp $OUTFILE $OUTDIR/
         #echo $OUTDIR/$(basename $OUTFILE)
         echo $OUTFILE
@@ -48,4 +48,4 @@ do
 done
 
 # Make sure we process the last key.
-processKey "$OUTFILE" "$FILESTOMERGE"
+processKey "$OUTFILE" "$FILESTOMERGE" "$OUTDIR"
