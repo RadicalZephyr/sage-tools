@@ -13,9 +13,10 @@ processKey () {
 
     if [ -n "$OUTFILE" -a -n "$FILESTOMERGE" ]
     then
-        sort -m $FILESTOMERGE > $OUTFILE
-        hadoop fs -cp $OUTFILE $OUTDIR/
-        echo $OUTDIR/$(basename $OUTFILE)
+        sort -m $FILESTOMERGE > out/$OUTFILE
+        #hadoop fs -cp $OUTFILE $OUTDIR/
+        #echo $OUTDIR/$(basename $OUTFILE)
+        echo $OUTFILE
         rm $FILESTOMERGE
     fi
 }
@@ -37,7 +38,8 @@ do
 
     # file must be sorted to do a merge
     TMP=$(mktemp)
-    hadoop fs -cat $FILE | gzip -cd > $TMP
+    #hadoop fs -cat $FILE | gzip -cd > $TMP
+    cat $FILE | gzip -cd > $TMP
 
     if sort -c $TMP
     then
