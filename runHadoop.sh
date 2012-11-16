@@ -10,7 +10,7 @@ rm -rf $HADOOP_OUT_DIR
 pushd $SAGE_DIR
 
 $HADOOP_INSTALL/bin/hadoop jar $HADOOP_INSTALL/contrib/streaming/hadoop-0.20.2-streaming.jar \
-  -input /home/geoff/work/sage/logs/repo/files.txt \
+  -input /home/geoff/work/sage/logs/s3/listing.txt
   -output $HADOOP_OUT_DIR \
   -mapper bin/maplogs.sh \
   -reducer bin/reducelogs.sh \
