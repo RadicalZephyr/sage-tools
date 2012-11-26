@@ -1,19 +1,13 @@
 #!/usr/bin/env bash
 
-echoerr() {
-    echo "$@" 1>&2
-}
-
 processKey () {
     OUTFILE="$1"
     FILESTOMERGE="$2"
     OUTDIR="$3"
 
-    echoerr "Doing post-processing of $OUTFILE, outputting to $OUTDIR"
-
     if [ -n "$OUTFILE" -a -n "$FILESTOMERGE" ]
     then
-        sort -m $FILESTOMERGE > out/${OUTFILE}.log
+        sort -o out/${OUTFILE}.log -m $FILESTOMERGE
         #hadoop fs -cp $OUTFILE $OUTDIR/
         #echo $OUTDIR/$(basename $OUTFILE)
         echo $OUTFILE
@@ -27,8 +21,6 @@ OUTFILE=''
 FILESTOMERGE=''
 while read -r KEY FILE
 do
-    echoerr "Key: $KEY"
-    echoerr "File: $FILE"
     if [ "$KEY" != "$OUTFILE" ]
     then
         processKey "$OUTFILE" "$FILESTOMERGE" "$OUTDIR"
@@ -43,6 +35,9 @@ do
 
     if sort -c $TMP
     then
+        FILESTOMERGE=$FILESTOMERGE" $TMP"
+    else
+        sort -o $TMP $TMP
         FILESTOMERGE=$FILESTOMERGE" $TMP"
     fi        
 done
