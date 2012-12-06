@@ -39,7 +39,7 @@ do
     else
         sort -o $TMP $TMP
         FILESTOMERGE=$FILESTOMERGE" $TMP"
-    fi        
+    fi
 done
 
 # Make sure we process the last key.
